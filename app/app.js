@@ -1,5 +1,5 @@
 const express = require('express')
-const { getCategories } = require('../controllers/get.controllers')
+const { getCategories } = require('../controllers/catergory.controllers')
 const app = express()
 
 app.use(express.json())
