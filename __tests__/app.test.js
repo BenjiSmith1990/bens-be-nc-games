@@ -49,6 +49,11 @@ describe('GET /api/reviews/:review_id', () => {
             expect(Object.keys(result.body.review[0]).length).toBe(9)
         })
     })
+    test('/api/reviews/2 - status 200 - responds with an object containing 9 properties, with the review_id to be 2', ()=> {
+        return request(app).get('/api/reviews/2').expect(200).then(result => {
+            expect(result.body.review[0].review_id).toBe(2)
+        })
+    })
     test('/api/reviews/2 - status 200 - responds with an object containing 9 properties (review_id, title, review_body, designer, review_img_url, votes, category, owner and created_at)', ()=> {
         return request(app).get('/api/reviews/2').expect(200).then(result => {
                 expect(typeof result.body.review[0].review_id).toBe('number')
