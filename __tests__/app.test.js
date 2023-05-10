@@ -42,3 +42,44 @@ describe('GET /api', () => {
     })
    
 })
+
+describe('GET /api/reviews/:review_id', () => {
+    test('/api/reviews/2 - status 200 - responds with an object containing 9 properties', ()=> {
+        return request(app).get('/api/reviews/2').expect(200).then(result => {
+            expect(Object.keys(result.body.review[0]).length).toBe(9)
+        })
+    })
+    test('/api/reviews/2 - status 200 - responds with an object containing 9 properties, with the review_id to be 2', ()=> {
+        return request(app).get('/api/reviews/2').expect(200).then(result => {
+            expect(result.body.review[0].review_id).toBe(2)
+        })
+    })
+    test('/api/reviews/2 - status 200 - responds with an object containing 9 properties (review_id, title, review_body, designer, review_img_url, votes, category, owner and created_at)', ()=> {
+        return request(app).get('/api/reviews/2').expect(200).then(result => {
+                expect(typeof result.body.review[0].review_id).toBe('number')
+                expect(typeof result.body.review[0].title).toBe('string')
+                expect(typeof result.body.review[0].review_body).toBe('string')
+                expect(typeof result.body.review[0].designer).toBe('string')
+                expect(typeof result.body.review[0].review_img_url).toBe('string')
+                expect(typeof result.body.review[0].votes).toBe('number')
+                expect(typeof result.body.review[0].category).toBe('string')
+                expect(typeof result.body.review[0].owner).toBe('string')
+                expect(typeof result.body.review[0].created_at).toBe('string')
+        })
+    })
+})
+
+describe('GET - /api/reviews/nonsense', () => {
+    test('/api/reviews/nonsense - status - 400 - with a message of "Bad Request', () => {
+        return request(app).get('/api/reviews/nonsense').expect(400).then(result => {
+            expect(result.body.msg).toBe('Bad Request!')
+        })
+    })
+})
+describe('GET - /api/reviews/1000000', () => {
+    test('/api/reviews/1000000 - status - 404 - with a message of "Review Not Found', () => {
+        return request(app).get('/api/reviews/1000000').expect(404).then(result => {
+            expect(result.body.msg).toBe('Review Not Found!')
+        })
+    })
+})
