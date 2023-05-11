@@ -5,7 +5,7 @@
 -- SELECT * FROM comments;
 -- SELECT * FROM users;
 -- SELECT * FROM categories;
-SELECT * FROM comments WHERE review_id = 10000
+SELECT * FROM comments WHERE review_id = 2 ORDER BY created_at DESC;
 
 -- SELECT * FROM reviews WHERE review_id = 2;
 

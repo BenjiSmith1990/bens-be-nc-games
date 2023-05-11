@@ -26,7 +26,7 @@ exports.fetchReviews = () => {
 }
 
 exports.fetchReviewCommentsById = (review_id) => {
-    const queryStr = `SELECT * FROM comments WHERE review_id = $1;`
+    const queryStr = `SELECT * FROM comments WHERE review_id = $1 ORDER BY created_at DESC;`
 
     return connection.query(queryStr, [review_id]).then(result => {
         if(result.rows.length === 0){

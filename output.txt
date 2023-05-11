@@ -1,5 +1,8 @@
 You are now connected to database "nc_games" as user "benjismith1990".
- comment_id | body | review_id | author | votes | created_at 
-------------+------+-----------+--------+-------+------------
-(0 rows)
+ comment_id |                                    body                                     | review_id |    author    | votes |       created_at        
+------------+-----------------------------------------------------------------------------+-----------+--------------+-------+-------------------------
+         10 | Ex id ipsum dolore non cillum anim sint duis nisi anim deserunt nisi minim. |         2 | grumpy19     |     9 | 2021-03-27 14:15:31.11
+          1 | I loved this game too!                                                      |         2 | happyamy2016 |    16 | 2017-11-22 12:36:03.389
+          4 | EPIC board game!                                                            |         2 | tickle122    |    16 | 2017-11-22 12:36:03.389
+(3 rows)
 
