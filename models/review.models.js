@@ -13,3 +13,7 @@ exports.fetchReviewById = (review_id) => {
     })
 
 }
+
+exports.fetchReviewCommentsById = (review_id) => {
+    console.log('in model')
+}

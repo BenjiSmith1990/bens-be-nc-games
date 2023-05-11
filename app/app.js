@@ -1,7 +1,7 @@
 const express = require('express')
 const { getEndpoints } = require('../controllers/api.controller')
 const { getCategories } = require('../controllers/catergory.controllers')
-const { getReviewById } = require('../controllers/review.controllers')
+const { getReviewById, getReviewsCommentsById } = require('../controllers/review.controllers')
 const app = express()
 
 app.use(express.json())
@@ -11,6 +11,8 @@ app.get('/api/categories', getCategories)
 app.get('/api', getEndpoints)
 
 app.get('/api/reviews/:review_id', getReviewById)
+
+app.get('/api/reviews/review_id/comments', getReviewsCommentsById)
 
 app.use((err, req, res, next) => {
     if(err.code === '22P02'){

@@ -1,4 +1,4 @@
-const { fetchReviewById } = require("../models/review.models")
+const { fetchReviewById, fetchReviewCommentsById } = require("../models/review.models")
 
 exports.getReviewById = (req, res, next) => {
     const {review_id} = req.params
@@ -7,4 +7,10 @@ exports.getReviewById = (req, res, next) => {
     }).catch(err => {
         next(err)
     })
+}
+
+exports.getReviewsCommentsById = (req,res,next) =>{
+    const {review_id} = req.params;
+    console.log('in controller')
+    fetchReviewCommentsById(review_id)
 }

@@ -83,3 +83,10 @@ describe('GET - /api/reviews/1000000', () => {
         })
     })
 })
+describe.only('Get - /api/reviews/review_id/comments', () => {
+    test.only('/api/reviews/2/comments - status 200 - with a response array of all the comments for that review_id (2 in this case)', () => {
+        return request(app).get('/api/reviews/_review_id/comments').expect(200).then(({body}) => {
+            expect(body.comments.length).toBe(3)
+        })
+    })
+})
