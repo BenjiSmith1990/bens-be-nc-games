@@ -1,3 +1,4 @@
+const connection = require('../connection.js')
 exports.convertTimestampToDate = ({ created_at, ...otherProperties }) => {
 	if (!created_at) return { ...otherProperties };
 	return { created_at: new Date(created_at), ...otherProperties };
@@ -20,3 +21,19 @@ exports.formatComments = (comments, idLookup) => {
 		};
 	});
 };
+
+exports.checkIfRevewIdExists = (review_id) => {
+	return connection.query(`SELECT * FROM reviews WHERE review_id = $1`, [review_id]).then(result => {
+		if(result.rows.length === 0 && review_id){
+			return Promise.reject({status: 404, msg: 'Review Not Found!'})
+		}
+	})
+}
+
+exports.checkIfUserExists = (username) => {
+	return connection.query(`SELECT * FROM comments WHERE author = $1`, [username]).then(result => {
+		if(result.rows.length === 0 && username){
+			return Promise.reject({status : 400, msg : 'User Not Logged In!'})
+		}
+	})
+}
