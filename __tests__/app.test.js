@@ -68,7 +68,6 @@ describe('GET /api/reviews/:review_id', () => {
         })
     })
 })
-
 describe('GET - /api/reviews/nonsense', () => {
     test('/api/reviews/nonsense - status - 400 - with a message of "Bad Request', () => {
         return request(app).get('/api/reviews/nonsense').expect(400).then(result => {
@@ -83,7 +82,6 @@ describe('GET - /api/reviews/1000000', () => {
         })
     })
 })
-
 describe('GET - /api/reviews', () => {
     test('/api/reviews - status 200 - responds with an array', () => {
         return request(app).get('/api/reviews').expect(200).then(result => {
@@ -107,3 +105,65 @@ describe('GET - /api/reviews', () => {
         })
     })
 })
+
+
+describe('GET - /api/reviews', () => {
+    test('/api/reviews - status 200 - responds with an array', () => {
+        return request(app).get('/api/reviews').expect(200).then(result => {
+            expect(Array.isArray(result.body.reviews)).toBe(true)
+        })
+    })
+    test('/api/reviews - status 200 - responds with an array of object, each object should have 9 keys', () => {
+        return request(app).get('/api/reviews').expect(200).then(result => {
+            result.body.reviews.forEach(review => {
+                expect(Object.keys(review).length).toBe(9)
+                expect(typeof review.owner).toBe('string')
+                expect(typeof review.title).toBe('string')
+                expect(typeof review.review_id).toBe('number')
+                expect(typeof review.category).toBe('string')
+                expect(typeof review.review_img_url).toBe('string')
+                expect(typeof review.created_at).toBe('string')
+                expect(typeof review.votes).toBe('number')
+                expect(typeof review.designer).toBe('string')
+                expect(typeof review.comment_count).toBe('string')
+            })
+        })
+    })
+    test('/api/reviews - status 200 - responds with a sorted array by created_at', () => {
+        return request(app).get('/api/reviews').expect(200).then(result => {
+            expect(result.body.reviews).toBeSortedBy('created_at', {descending : true, coerce : true})
+        })
+    })
+})
+describe('Get - /api/reviews/review_id/comments', () => {
+    test('/api/reviews/2/comments - status 200 - with a response array of all the comments for that review_id (2 in this case)', () => {
+         return request(app).get('/api/reviews/2/comments').expect(200).then(result => {
+            expect(result.body.comments.length).toBe(3)
+            result.body.comments.forEach(comment => {
+                expect(Object.keys(comment).length).toBe(6)
+                expect(typeof comment.comment_id).toBe('number')
+                expect(typeof comment.votes).toBe('number')
+                expect(typeof comment.created_at).toBe('string')
+                expect(typeof comment.author).toBe('string')
+                expect(typeof comment.body).toBe('string')
+                expect(typeof comment.review_id).toBe('number')
+            })
+         })
+     })
+     test('/api/reviews/:review_id/comments - status 200 - responds with an array of objects ordered by created_at date - newest first', () => {
+        return request(app).get('/api/reviews/2/comments').expect(200).then(result => {
+            expect(result.body.comments).toBeSortedBy('created_at', {descending : true, coerce: true})
+        })
+     })
+     test('/api/reviews/nonesense/comments - status 400 - with a "bad Request! message', () => {
+        return request(app).get('/api/reviews/nonsense/comments').expect(400).then(result => {
+            expect(result.body.msg).toBe('Bad Request!')
+        })
+     })
+     test('/api/reviews/100000/comments - status 404 - with a "Review Not Found! message', () => {
+        return request(app).get('/api/reviews/1000000/comments').expect(404).then(result => {
+            expect(result.body.msg).toBe('Review Not Found!')
+        })
+     })
+})
+
