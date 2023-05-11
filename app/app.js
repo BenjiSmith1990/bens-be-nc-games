@@ -1,7 +1,7 @@
 const express = require('express')
 const { getEndpoints } = require('../controllers/api.controller')
 const { getCategories } = require('../controllers/catergory.controllers')
-const { getReviewById, getReviews, getReviewsCommentsById } = require('../controllers/review.controllers')
+const { getReviewById, getReviews, getReviewCommentsById } = require('../controllers/review.controllers')
 const app = express()
 
 app.use(express.json())
@@ -15,8 +15,10 @@ app.get('/api/reviews/:review_id', getReviewById)
 
 app.get('/api/reviews', getReviews)
 
-app.get('/api/reviews/review_id/comments', getReviewsCommentsById)
+app.get('/api/reviews/:review_id/comments', getReviewCommentsById)
+
 app.use((err, req, res, next) => {
+    console.log(err)
     if(err.code === '22P02'){
         res.status(400).send({msg : 'Bad Request!'})
     }else {

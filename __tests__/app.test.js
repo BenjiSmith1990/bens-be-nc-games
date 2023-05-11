@@ -129,9 +129,36 @@ describe('GET - /api/reviews', () => {
             })
         })
     })
+    test('/api/reviews - status 200 - responds with a sorted array by created_at', () => {
+        return request(app).get('/api/reviews').expect(200).then(result => {
+            expect(result.body.reviews).toBeSortedBy('created_at', {descending : true, coerce : true})
+        })
+    })
 })
-                describe.only('Get - /api/reviews/review_id/comments', () => {
-                    test.only('/api/reviews/2/comments - status 200 - with a response array of all the comments for that review_id (2 in this case)', () => {
-                     
-                    })
-                })
+describe.only('Get - /api/reviews/review_id/comments', () => {
+    test('/api/reviews/2/comments - status 200 - with a response array of all the comments for that review_id (2 in this case)', () => {
+         return request(app).get('/api/reviews/2/comments').expect(200).then(result => {
+            expect(result.body.comments.length).toBe(3)
+            result.body.comments.forEach(comment => {
+                expect(Object.keys(comment).length).toBe(6)
+                expect(typeof comment.comment_id).toBe('number')
+                expect(typeof comment.votes).toBe('number')
+                expect(typeof comment.created_at).toBe('string')
+                expect(typeof comment.author).toBe('string')
+                expect(typeof comment.body).toBe('string')
+                expect(typeof comment.review_id).toBe('number')
+            })
+         })
+     })
+     test('/api/reviews/nonesense/comments - status 400 - with a "bad Request! message', () => {
+        return request(app).get('/api/reviews/nonsense/comments').expect(400).then(result => {
+            expect(result.body.msg).toBe('Bad Request!')
+        })
+     })
+     test.only('/api/reviews/100000/comments - status 404 - with a "Review Not Found! message', () => {
+        return request(app).get('/api/reviews/1000000/comments').expect(404).then(result => {
+            expect(result.body.msg).toBe('Review Not Found!')
+        })
+     })
+})
+
