@@ -18,7 +18,6 @@ app.get('/api/reviews', getReviews)
 app.get('/api/reviews/:review_id/comments', getReviewCommentsById)
 
 app.use((err, req, res, next) => {
-    console.log(err)
     if(err.code === '22P02'){
         res.status(400).send({msg : 'Bad Request!'})
     }else {
