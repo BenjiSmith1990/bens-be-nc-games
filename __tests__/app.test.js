@@ -166,4 +166,41 @@ describe('Get - /api/reviews/review_id/comments', () => {
         })
      })
 })
+describe('POST - /api/reviews/:review_id/comments', () => {
+    test('/api/reviews/2/comments - status 201 - responds with an array of the newly created post', () => {
+        return request(app).post('/api/reviews/2/comments').expect(201).send({username :'bainesface', body: 'death to review days!'}).then(result => {
+            expect(result.body.newPost.length).toBe(1)
+        })
+    })
+    test('/api/reviews/2/comments - status 201 - responds with an array with 6 keys', () => {
+        return request(app).post('/api/reviews/2/comments').expect(201).send({username :'bainesface', body: 'death to review days!'}).then(result => {
+            expect(Object.keys(result.body.newPost[0]).length).toBe(6)
+        })
+    })
+    test('/api/reviews/2/comments - status 201 - responds with an array with 6 keys (comment_id, body, review_id, author, votes, created_at)', () => {
+        return request(app).post('/api/reviews/2/comments').expect(201).send({username :'bainesface', body: 'death to review days!'}).then(({body}) => {
+            expect(typeof body.newPost[0].comment_id).toBe('number')
+            expect(typeof body.newPost[0].body).toBe('string')
+            expect(typeof body.newPost[0].review_id).toBe('number')
+            expect(typeof body.newPost[0].author).toBe('string')
+            expect(typeof body.newPost[0].votes).toBe('number')
+            expect(typeof body.newPost[0].created_at).toBe('string')
+        })
+    })
+    test('POST -/api/reviews/nonsense/comments - status 400 - responds with a message of "Bad Request!"', () => {
+        return request(app).post('/api/reviews/nonsense/comments').expect(400).send({username :'bainesface', body: 'death to review days!'}).then(result => {
+            expect(result.body.msg).toBe('Bad Request!')
+        })
+    })
+    test('POST -/api/reviews/100000/comments - status 404 - with a "Review Not Found! message', () => {
+        return request(app).post('/api/reviews/1000000/comments').send({username :'bainesface', body: 'death to review days!'}).expect(404).then(result => {
+            expect(result.body.msg).toBe('Review Not Found!')
+        })
+     })
+    test('POST -/api/reviews/2/comments - status 404 - with a "User not logged in', () => {
+        return request(app).post('/api/reviews/2/comments').send({username :'ihatereviewdays', body: 'death to review days!'}).expect(404).then(result => {
+            expect(result.body.msg).toBe('User Not Logged In!')
+        })
+     })
+})
 
