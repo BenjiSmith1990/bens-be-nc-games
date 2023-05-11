@@ -68,7 +68,6 @@ describe('GET /api/reviews/:review_id', () => {
         })
     })
 })
-
 describe('GET - /api/reviews/nonsense', () => {
     test('/api/reviews/nonsense - status - 400 - with a message of "Bad Request', () => {
         return request(app).get('/api/reviews/nonsense').expect(400).then(result => {
@@ -83,8 +82,56 @@ describe('GET - /api/reviews/1000000', () => {
         })
     })
 })
-describe.only('Get - /api/reviews/review_id/comments', () => {
-    test.only('/api/reviews/2/comments - status 200 - with a response array of all the comments for that review_id (2 in this case)', () => {
-     
+describe('GET - /api/reviews', () => {
+    test('/api/reviews - status 200 - responds with an array', () => {
+        return request(app).get('/api/reviews').expect(200).then(result => {
+            expect(Array.isArray(result.body.reviews)).toBe(true)
+        })
+    })
+    test('/api/reviews - status 200 - responds with an array of object, each object should have 9 keys', () => {
+        return request(app).get('/api/reviews').expect(200).then(result => {
+            result.body.reviews.forEach(review => {
+                expect(Object.keys(review).length).toBe(9)
+                expect(typeof review.owner).toBe('string')
+                expect(typeof review.title).toBe('string')
+                expect(typeof review.review_id).toBe('number')
+                expect(typeof review.category).toBe('string')
+                expect(typeof review.review_img_url).toBe('string')
+                expect(typeof review.created_at).toBe('string')
+                expect(typeof review.votes).toBe('number')
+                expect(typeof review.designer).toBe('string')
+                expect(typeof review.comment_count).toBe('string')
+            })
+        })
     })
 })
+
+
+describe('GET - /api/reviews', () => {
+    test('/api/reviews - status 200 - responds with an array', () => {
+        return request(app).get('/api/reviews').expect(200).then(result => {
+            expect(Array.isArray(result.body.reviews)).toBe(true)
+        })
+    })
+    test('/api/reviews - status 200 - responds with an array of object, each object should have 9 keys', () => {
+        return request(app).get('/api/reviews').expect(200).then(result => {
+            result.body.reviews.forEach(review => {
+                expect(Object.keys(review).length).toBe(9)
+                expect(typeof review.owner).toBe('string')
+                expect(typeof review.title).toBe('string')
+                expect(typeof review.review_id).toBe('number')
+                expect(typeof review.category).toBe('string')
+                expect(typeof review.review_img_url).toBe('string')
+                expect(typeof review.created_at).toBe('string')
+                expect(typeof review.votes).toBe('number')
+                expect(typeof review.designer).toBe('string')
+                expect(typeof review.comment_count).toBe('string')
+            })
+        })
+    })
+})
+                describe.only('Get - /api/reviews/review_id/comments', () => {
+                    test.only('/api/reviews/2/comments - status 200 - with a response array of all the comments for that review_id (2 in this case)', () => {
+                     
+                    })
+                })
