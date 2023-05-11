@@ -33,7 +33,7 @@ exports.checkIfRevewIdExists = (review_id) => {
 exports.checkIfUserExists = (username) => {
 	return connection.query(`SELECT * FROM comments WHERE author = $1`, [username]).then(result => {
 		if(result.rows.length === 0 && username){
-			return Promise.reject({status : 404, msg : 'User Not Logged In!'})
+			return Promise.reject({status : 400, msg : 'User Not Logged In!'})
 		}
 	})
 }

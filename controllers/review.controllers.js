@@ -31,8 +31,7 @@ exports.postCommentByReviewId = (req, res, next)=>{
     const {review_id} = req.params
     const {username} = req.body
     const newComment = req.body
-    checkIfUserExists(username).catch(err => next(err))
-    checkIfRevewIdExists(review_id).catch(err => next(err))
+    Promise.all([checkIfUserExists(username),checkIfRevewIdExists(review_id)]).catch(err => next(err))
     addCommentByReviewId(review_id, newComment).then(result => {
         res.status(201).send({newPost : result})
     }).catch(err => {

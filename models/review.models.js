@@ -33,13 +33,16 @@ exports.fetchReviewCommentsById = (review_id) => {
 
 exports.addCommentByReviewId = (review_id, newComment) => {
     const {username, body} = newComment
-
+    if(!body){
+        return Promise.reject({status: 400, msg : 'Please provide a comment'})
+     }
     const queryStr = `INSERT INTO comments
                         (body, author, review_id)
                         VALUES
                         ($1, $2, $3) RETURNING *;`
+    
 
-    return connection.query(queryStr, [body, username, review_id]).then(result => {
-        return result.rows
-    })
+        return connection.query(queryStr, [body, username, review_id]).then(result => {
+            return result.rows
+        })
 }

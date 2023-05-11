@@ -197,8 +197,18 @@ describe('POST - /api/reviews/:review_id/comments', () => {
             expect(result.body.msg).toBe('Review Not Found!')
         })
      })
-    test('POST -/api/reviews/2/comments - status 404 - with a "User not logged in', () => {
-        return request(app).post('/api/reviews/2/comments').send({username :'ihatereviewdays', body: 'death to review days!'}).expect(404).then(result => {
+    test('POST -/api/reviews/2/comments - status 400 - with a "User not logged in', () => {
+        return request(app).post('/api/reviews/2/comments').send({username :'ihatereviewdays', body: 'death to review days!'}).expect(400).then(result => {
+            expect(result.body.msg).toBe('User Not Logged In!')
+        })
+     })
+    test('POST -/api/reviews/2/comments - status 400 - with a "Please provide a comment" if no username is provided', () => {
+        return request(app).post('/api/reviews/2/comments').send({username :'bainesface', body: ''}).expect(400).then(result => {
+            expect(result.body.msg).toBe('Please provide a comment')
+        })
+     })
+    test('POST -/api/reviews/2/comments - status 400 - with a "User Not Logged In!" if no body is provided', () => {
+        return request(app).post('/api/reviews/2/comments').send({username :'BenjiSmith1990', body: 'I Love This'}).expect(400).then(result => {
             expect(result.body.msg).toBe('User Not Logged In!')
         })
      })
