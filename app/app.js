@@ -1,7 +1,7 @@
 const express = require('express')
 const { getEndpoints } = require('../controllers/api.controller')
 const { getCategories } = require('../controllers/catergory.controllers')
-const { getReviewById, getReviews, getReviewCommentsById, postCommentByReviewId } = require('../controllers/review.controllers')
+const { getReviewById, getReviews, getReviewCommentsById, postCommentByReviewId, patchVotesById } = require('../controllers/review.controllers')
 const app = express()
 
 app.use(express.json())
@@ -18,6 +18,8 @@ app.get('/api/reviews', getReviews)
 app.get('/api/reviews/:review_id/comments', getReviewCommentsById)
 
 app.post('/api/reviews/:review_id/comments', postCommentByReviewId)
+
+app.patch('/api/reviews/:review_id', patchVotesById)
 
 app.use((err, req, res, next) => {
     if(err.code === '22P02'){

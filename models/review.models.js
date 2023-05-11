@@ -46,3 +46,15 @@ exports.addCommentByReviewId = (review_id, newComment) => {
             return result.rows
         })
 }
+
+exports.updateVotesById = (review_id, inc_votes) => {
+    if(typeof review_id !=='number' && typeof inc_votes !== 'number'){
+        return Promise.reject({status: 400, msg: 'Please provide correct values to update'})
+    }
+   
+    const queryStr = `UPDATE reviews
+                      SET votes = votes +${inc_votes} WHERE review_id = ${review_id}RETURNING *;`
+    return connection.query(queryStr).then(result => {
+        return result.rows
+    })
+}

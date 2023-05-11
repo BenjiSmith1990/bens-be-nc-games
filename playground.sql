@@ -2,7 +2,7 @@
 
 -- SELECT comments.review_id, comments.created_at FROM comments ORDER BY created_at DESC;
 -- SELECT * FROM reviews;
-SELECT * FROM comments;
+-- SELECT * FROM comments;
 -- SELECT * FROM users;
 -- SELECT * FROM categories;
 -- SELECT * FROM comments WHERE review_id = 2 ORDER BY created_at DESC;
@@ -18,3 +18,5 @@ SELECT * FROM comments;
 -- GROUP BY reviews.owner, reviews.title, reviews.review_id, reviews.category, reviews.review_img_url, reviews.created_at, reviews.votes, reviews.designer
 --     ORDER BY created_at DESC
 -- SELECT * FROM comments WHERE review_id = 1000
+
+SELECT * FROM reviews 
