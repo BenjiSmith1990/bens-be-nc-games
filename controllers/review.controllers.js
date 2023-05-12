@@ -44,6 +44,6 @@ exports.patchVotesById = (req, res, next) => {
     const {review_id} = req.params
     checkIfRevewIdExists(review_id).catch(err => next(err))
     updateVotesById(review_id, inc_votes).then(result => {
-        res.status(202).send({updatedReview : result})
+        res.status(200).send({updatedReview : result})
     }).catch(err => next(err))
 }

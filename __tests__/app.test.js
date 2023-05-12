@@ -221,33 +221,33 @@ describe('POST /api/reviews/100000/comments', () => {
 
 
 describe('PATCH /api/reviews/2', () => {
-    test('PATCH /api/reviews/2 - status 201 - responds with an array of the newly updated post', () => {
-        return request(app).patch('/api/reviews/2').expect(202).send({inc_votes : -100}).then(result => {
+    test('PATCH /api/reviews/2 - status 200 - responds with an array of the newly updated post', () => {
+        return request(app).patch('/api/reviews/2').expect(200).send({inc_votes : -100}).then(result => {
             expect(Object.keys(result.body.updatedReview[0]).length).toBe(9)
         })
     })
-    test('PATCH /api/reviews/2 - status 202 - response review_id must be 2', ()=> {
-        return request(app).patch('/api/reviews/2').expect(202).send({inc_votes:-100}).then(result => {
+    test('PATCH /api/reviews/2 - status 200 - response review_id must be 2', ()=> {
+        return request(app).patch('/api/reviews/2').expect(200).send({inc_votes:-100}).then(result => {
             expect(result.body.updatedReview[0].review_id).toBe(2)
         })
     })
-    test('/api/reviews/2 - status 202 - responds with an object containing 9 properties', ()=> {
-        return request(app).patch('/api/reviews/2').expect(202).send({inc_votes: -100}).then(result => {
+    test('/api/reviews/2 - status 200 - responds with an object containing 9 properties', ()=> {
+        return request(app).patch('/api/reviews/2').expect(200).send({inc_votes: -100}).then(result => {
             expect(Object.keys(result.body.updatedReview[0]).length).toBe(9)
         })
     })
-    test('/api/reviews/2 - status 202 - responds with an object containing a votes property with an updated value of -95', ()=> {
-        return request(app).patch('/api/reviews/2').expect(202).send({inc_votes: -100}).then(result => {
+    test('/api/reviews/2 - status 200 - responds with an object containing a votes property with an updated value of -95', ()=> {
+        return request(app).patch('/api/reviews/2').expect(200).send({inc_votes: -100}).then(result => {
             expect(result.body.updatedReview[0].votes).toBe(-95)
         })
     })
-    test('/api/reviews/2 - status 202 - responds with an object containing a votes property with an updated value of 25', ()=> {
-        return request(app).patch('/api/reviews/2').expect(202).send({inc_votes: 20}).then(result => {
+    test('/api/reviews/2 - status 200 - responds with an object containing a votes property with an updated value of 25', ()=> {
+        return request(app).patch('/api/reviews/2').expect(200).send({inc_votes: 20}).then(result => {
             expect(result.body.updatedReview[0].votes).toBe(25)
         })
     })
-    test('/api/reviews/2 - status 202 - responds with an object containing 9 properties (review_id, title, review_body, designer, review_img_url, votes, category, owner and created_at)', ()=> {
-        return request(app).patch('/api/reviews/2').expect(202).send({inc_votes:-100}).then(result => {
+    test('/api/reviews/2 - status 200 - responds with an object containing 9 properties (review_id, title, review_body, designer, review_img_url, votes, category, owner and created_at)', ()=> {
+        return request(app).patch('/api/reviews/2').expect(200).send({inc_votes:-100}).then(result => {
                 expect(typeof result.body.updatedReview[0].review_id).toBe('number')
                 expect(typeof result.body.updatedReview[0].title).toBe('string')
                 expect(typeof result.body.updatedReview[0].review_body).toBe('string')
@@ -270,8 +270,8 @@ describe('PATCH /api/reviews/nonsense', () => {
 })
 describe('PATCH /api/reviews/100000', () => {
     test('PATCH -/api/reviews/100000 - status 404 - with a "Review Not Found! message', () => {
-        return request(app).patch('/api/reviews/1000000').send({inc_votes: null}).expect(400).then(result => {
-            expect(result.body.msg).toBe('Please provide correct values to update')
+        return request(app).patch('/api/reviews/1000000').send({inc_votes: null}).expect(404).then(result => {
+            expect(result.body.msg).toBe('Review Not Found!')
         })
      })
 })
