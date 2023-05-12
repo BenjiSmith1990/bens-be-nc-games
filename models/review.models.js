@@ -46,3 +46,12 @@ exports.addCommentByReviewId = (review_id, newComment) => {
             return result.rows
         })
 }
+
+exports.updateVotesById = (review_id, inc_votes) => {
+   
+    const queryStr = `UPDATE reviews
+                      SET votes = votes + $1 WHERE review_id = $2RETURNING *;`
+    return connection.query(queryStr,[inc_votes, review_id]).then(result => {
+        return result.rows
+    })
+}
