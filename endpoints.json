@@ -84,5 +84,24 @@
         }
       ]
     }
+  },
+  "PATCH /api/reviews/:review_id" : {
+    "description" : "serves an array of the review by the review_id",
+    "queries" : [],
+    "exampleResponse" : {
+      "reviews" : [
+        {
+         "review_id" : 2,
+         "title" : "Jenga",
+         "category" : "dexterity",
+         "designer" : "Leslie Scott",
+         "owner" : "philippaclaire9",
+         "review_boy" : "Fiddly fun for all the family",
+         "review_img_url" : "https://images.pixels.com/photos/4473494/pexels-photo-A473494.jpeg?w=700&h=700",
+         "created_at" : "2021-01-18T10:01:41.251Z",
+         "votes" : 5 
+        }
+      ]
+    }
   }
 }
