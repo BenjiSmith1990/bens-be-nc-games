@@ -284,3 +284,10 @@ describe('PATCH /api/reviews/100000', () => {
 
 })
 
+// describe('DELETE - /api/reviews/2/comments/1', () => {
+//     test('Status 200 - with a msg of no content', () => {
+//         return request(app).delete('/api/reviews/2/comments/1').expect(200).then(result => {
+//             expect(result.body.msg).toBe('No Content')
+//         })
+//     })
+// })
